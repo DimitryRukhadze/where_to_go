@@ -1,0 +1,10 @@
+*env
+*.sqlite3
+.gitattributes
+**/_pycache_
+*.pyc
+static
+where-to-go-frontend-master
+media
+where-to-go-places-master
+static_root
