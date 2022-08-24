@@ -6,7 +6,7 @@
 
 Для работы необходимо установить необходимые библиотеки. Это делается с помощью команды в терминале:
 ```commandline
-C:\Users\metal\PycharmProjects\forstudy\django_leasure_map>pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 После установки всех библиотек, создайте файл `.env` и поместите в него следующие переменные:
