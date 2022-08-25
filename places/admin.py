@@ -17,7 +17,7 @@ class ImagesInLine(SortableTabularInline):
 
         return format_html(f'<img src="{obj.img_file.url}" width="{width / 2}" height={height / 2} />')
 
-    fields = ('queue_position', 'title', 'img_file', 'img_preview')
+    fields = ('queue_position', 'img_file', 'img_preview')
 
 
 @admin.register(Place)
@@ -33,7 +33,7 @@ class PlacesAdmin(SortableAdminBase, admin.ModelAdmin):
 
 @admin.register(Image)
 class ImagesAdmin(SortableAdminMixin, admin.ModelAdmin):
-    list_display = ['title', 'place', 'queue_position']
+    list_display = ['img_file', 'place', 'queue_position']
     readonly_fields = ['img_preview']
     ordering = ['queue_position']
 

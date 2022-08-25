@@ -21,4 +21,4 @@ class Image(models.Model):
         ordering = ['queue_position']
 
     def __str__(self):
-        return f'{self.place.title}_{self.img_file}'
+        return f'{self.place.title}_{self.img_file.name}'

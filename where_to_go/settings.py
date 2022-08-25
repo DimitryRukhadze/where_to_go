@@ -13,7 +13,6 @@ DEBUG = env.bool('DEBUG_MODE')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
-
 # Application definition
 
 INSTALLED_APPS = [
