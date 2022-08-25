@@ -11,7 +11,7 @@ SECRET_KEY = env('DJANGO_SECURITY_KEY')
 
 DEBUG = env.bool('DEBUG_MODE')
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition

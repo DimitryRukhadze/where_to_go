@@ -14,6 +14,8 @@ pip install -r requirements.txt
 DJANGO_SECURITY_KEY = Ваш ключ безопасности Django
 ALLOWED_HOSTS = ['Разрешенные', 'хосты']
 DEBUG_MODE=False
+CSRF_COOKIE_SECURE = True или False
+SESSION_COOKIE_SECURE = True или False
 ```
 
 При первом запуске откройте терминал в папке `where_to_go` и запустите команду `python manage.py migrate` для создания
