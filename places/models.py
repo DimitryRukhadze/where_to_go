@@ -13,7 +13,6 @@ class Place(models.Model):
         return self.title
 
 class Image(models.Model):
-    title = models.CharField(max_length=200)
     img_file = models.ImageField(upload_to='imgs')
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='images')
     queue_position = models.PositiveIntegerField(default=0, db_index=True)
@@ -22,4 +21,4 @@ class Image(models.Model):
         ordering = ['queue_position']
 
     def __str__(self):
-        return self.title
+        return f'{self.place.title}_{self.img_file}'
