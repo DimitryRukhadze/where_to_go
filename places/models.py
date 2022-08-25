@@ -4,10 +4,10 @@ from tinymce.models import HTMLField
 # Create your models here.
 class Place(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    description_short = models.TextField(blank=True)
+    description_short = models.TextField()
     description_long = HTMLField(blank=True)
-    longitude = models.DecimalField(max_digits=16, decimal_places=14, blank=True)
-    latitude = models.DecimalField(max_digits=16, decimal_places=14, blank=True)
+    longitude = models.DecimalField(max_digits=16, decimal_places=14)
+    latitude = models.DecimalField(max_digits=16, decimal_places=14)
 
     def __str__(self):
         return self.title
