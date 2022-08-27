@@ -16,7 +16,7 @@ from places.models import Place, Image
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
-        parser.add_argument('json_path', action='store', help='Путь к папке с данными json', type=Path)
+        parser.add_argument('json_url', action='store', help='Путь к папке с данными json')
 
 
     def save_place_imgs(self, imgs_urls, temp_img_folder, place_to_attach):
@@ -32,36 +32,37 @@ class Command(BaseCommand):
             with open(save_path, 'wb') as img_file:
                 img_file.write(response.content)
 
-            new_image = place_to_attach.images.create(title=filename, place=place_to_attach)
+            new_image = place_to_attach.images.create(place=place_to_attach)
             with open(save_path, 'rb') as img_file:
                 new_image.img_file.save(filename, img_file, save=True)
 
 
     def handle(self, *args, **options):
 
-        json_file_path = options['json_path']
-        for filepath in json_file_path.iterdir():
+        json_files_url = options['json_url']
 
-            with open(filepath, 'rb') as place_specs:
-                place = json.load(place_specs)
+        response = requests.get(json_files_url)
+        response.raise_for_status()
+
+        place_data = response.json()
+        try:
+            new_place, _ = Place.objects.get_or_create(
+                title=place_data['title'],
+                description_short=place_data['description_short'],
+                description_long=place_data['description_long'],
+                longitude=float(place_data['coordinates']['lng']),
+                latitude=float(place_data['coordinates']['lat'])
+            )
+
+            temp_img_folder = 'temp_img_folder'
+            os.makedirs(temp_img_folder, exist_ok=True)
+
             try:
-                new_place, _ = Place.objects.get_or_create(
-                    title=place['title'],
-                    description_short=place['description_short'],
-                    description_long=place['description_long'],
-                    longitude=float(place['coordinates']['lng']),
-                    latitude=float(place['coordinates']['lat'])
-                )
+                self.save_place_imgs(place_data['imgs'], temp_img_folder, new_place)
+            except requests.exceptions.HTTPError as error:
+                print(error)
+            finally:
+                shutil.rmtree(temp_img_folder)
 
-                temp_img_folder = 'temp_img_folder'
-                os.makedirs(temp_img_folder, exist_ok=True)
-
-                try:
-                    self.save_place_imgs(place['imgs'], temp_img_folder, new_place)
-                except requests.exceptions.HTTPError as error:
-                    print(error)
-                finally:
-                    shutil.rmtree(temp_img_folder)
-
-            except IntegrityError:
-                suppress()
+        except IntegrityError:
+            suppress()
