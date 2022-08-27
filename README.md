@@ -12,6 +12,7 @@ pip install -r requirements.txt
 После установки всех библиотек, создайте файл `.env` и поместите в него следующие переменные:
 ```dotenv
 DJANGO_SECURITY_KEY = Ваш ключ безопасности Django
+STATIC_ROOT = путь/к/папке
 ALLOWED_HOSTS = ['Разрешенные', 'хосты']
 DEBUG_MODE=False
 CSRF_COOKIE_SECURE = True или False
@@ -28,7 +29,7 @@ SESSION_COOKIE_SECURE = True или False
 После того как подготовите файлы, запустите команду менеджера и передайте ей папку с файлами в качестве аргумента, как показано ниже:
 
 ```bash
-python manage.py load_place C:\путь\к\папке
+python manage.py load_url https://ваш/url
 ```
 
 ## Работа сайта
