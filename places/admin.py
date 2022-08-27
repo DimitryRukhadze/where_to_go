@@ -22,8 +22,9 @@ class ImagesInLine(SortableTabularInline):
         img_html = format_html(
             '<img src="{}" width="{}" height={} />',
             obj.img_file.url,
-            width, height
-            )
+            width,
+            height
+        )
 
         return mark_safe(img_html)
 
