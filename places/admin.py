@@ -1,7 +1,11 @@
 from django.contrib import admin
 from .models import Place, Image
 from django.utils.html import format_html, mark_safe
-from adminsortable2.admin import SortableAdminMixin, SortableTabularInline, SortableAdminBase
+from adminsortable2.admin import (
+    SortableTabularInline,
+    SortableAdminBase
+)
+
 
 class ImagesInLine(SortableTabularInline):
     model = Image
@@ -15,7 +19,11 @@ class ImagesInLine(SortableTabularInline):
             height /= 2
             width /= 2
 
-        img_html = format_html('<img src="{}" width="{}" height={} />', obj.img_file.url, width, height)
+        img_html = format_html(
+            '<img src="{}" width="{}" height={} />',
+            obj.img_file.url,
+            width, height
+            )
 
         return mark_safe(img_html)
 
