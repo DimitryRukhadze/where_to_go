@@ -8,12 +8,12 @@ class Place(models.Model):
     description_short = models.TextField()
     description_long = HTMLField(blank=True)
     longitude = models.DecimalField(
-        max_digits=16,
+        max_digits=17,
         decimal_places=14,
         validators=[MaxValueValidator(180), MinValueValidator(-180)]
     )
     latitude = models.DecimalField(
-        max_digits=16,
+        max_digits=17,
         decimal_places=14,
         validators=[MaxValueValidator(90), MinValueValidator(-90)]
     )
