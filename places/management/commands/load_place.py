@@ -6,9 +6,9 @@ from pathlib import Path
 from urllib.parse import urlparse, unquote
 
 import requests
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
-from places.models import Place, Image
+from places.models import Place
 
 
 class Command(BaseCommand):
