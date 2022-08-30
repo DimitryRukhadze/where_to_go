@@ -14,7 +14,7 @@ def make_places_geo_data(places):
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [float(place.longitude), float(place.latitude)]
+                "coordinates": [place.longitude, place.latitude]
             },
             "properties": {
                 "title": place.title,
