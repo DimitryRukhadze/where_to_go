@@ -13,11 +13,22 @@ pip install -r requirements.txt
 ```dotenv
 DJANGO_SECURITY_KEY=Ваш ключ безопасности Django
 STATIC_ROOT=путь/к/папке
-ALLOWED_HOSTS=['Разрешенный хост 1', 'Разрешенный хост 2']
+ALLOWED_HOSTS=Разрешенный хост 1, Разрешенный хост 2
 DEBUG_MODE=False
 CSRF_COOKIE_SECURE=True или False
 SESSION_COOKIE_SECURE=True или False
 ```
+`DJANGO_SECURITY_KEY` - ключ, обеспечивающий безопасность данных на сайте. Вот, как его можно сделать защищённым: [документация](https://docs.djangoproject.com/en/3.1/topics/signing/)
+
+`STATIC_ROOT` - в этой переменной находится адрес папки на сервере, из которой будет раздаваться статика. Больше о статике в django [здесь](https://docs.djangoproject.com/en/4.1/ref/contrib/staticfiles/)
+
+`ALLOWED_HOST` - имена доменов/хостов, с которыми будет работать сайт. [Подробности в документации](https://docs.djangoproject.com/en/4.1/ref/settings/)
+
+`DEBUG_MODE` - в значении `True` используется только при разработке на локальном ПК. Если сайт уже на сервере, то должно быть значение `False`.
+
+`CSRF_COOKIE_SECURE` - переменная определяет, считать ли SCRF куки безопасными. Если выставлено значение `True`, то браузер будет проверять, были ли SCRF куки переданы через протокол HTTPS.
+
+`SESSION_COOKIE_SECURE` - переменная определяет то же самое, что и `CSRF_COOKIE_SECURE`, но для всех куки.
 
 При первом запуске откройте терминал в папке `where_to_go` и запустите команду `python manage.py migrate` для создания
 пустой базы данных.
