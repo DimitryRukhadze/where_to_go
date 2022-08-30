@@ -1,6 +1,4 @@
 import os
-import argparse
-import json
 import shutil
 from contextlib import suppress
 
@@ -16,8 +14,11 @@ from places.models import Place, Image
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
-        parser.add_argument('json_url', action='store', help='Путь к папке с данными json')
-
+        parser.add_argument(
+            'json_url',
+            action='store',
+            help='Путь к папке с данными json'
+        )
 
     def save_place_imgs(self, imgs_urls, temp_img_folder, place_to_attach):
 
@@ -35,7 +36,6 @@ class Command(BaseCommand):
             new_image = place_to_attach.images.create(place=place_to_attach)
             with open(save_path, 'rb') as img_file:
                 new_image.img_file.save(filename, img_file, save=True)
-
 
     def handle(self, *args, **options):
 
@@ -58,7 +58,11 @@ class Command(BaseCommand):
             os.makedirs(temp_img_folder, exist_ok=True)
 
             try:
-                self.save_place_imgs(place_data['imgs'], temp_img_folder, new_place)
+                self.save_place_imgs(
+                    place_data['imgs'],
+                    temp_img_folder,
+                    new_place
+                )
             except requests.exceptions.HTTPError as error:
                 print(error)
             finally:

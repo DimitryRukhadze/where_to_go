@@ -28,7 +28,7 @@ class Image(models.Model):
         Place,
         on_delete=models.CASCADE,
         related_name='images'
-        )
+    )
     queue_position = models.PositiveIntegerField(default=0, db_index=True)
 
     class Meta:
