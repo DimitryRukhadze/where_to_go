@@ -23,6 +23,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('places/<int:place_id>', get_place_by_id, name='place_by_id'),
+    path('places/<int:place_id>/', get_place_by_id, name='place_by_id'),
     path('tinymce/', include('tinymce.urls'))
 ]
