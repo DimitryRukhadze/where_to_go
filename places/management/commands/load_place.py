@@ -1,6 +1,5 @@
 import os
 import shutil
-from contextlib import suppress
 
 from pathlib import Path
 from urllib.parse import urlparse, unquote
@@ -21,9 +20,7 @@ class Command(BaseCommand):
         )
 
     def save_place_imgs(self, imgs_urls, temp_img_folder, place_to_attach):
-
         for url in imgs_urls:
-
             response = requests.get(url)
             response.raise_for_status()
             filepath = urlparse(unquote(url)).path

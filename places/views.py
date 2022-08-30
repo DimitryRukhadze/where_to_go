@@ -1,5 +1,3 @@
-from itertools import chain
-
 from django.shortcuts import render, get_object_or_404
 from places.models import Place
 from django.http import JsonResponse
