@@ -27,8 +27,8 @@ INSTALLED_APPS = [
     'tinymce'
 ]
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE')
+SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

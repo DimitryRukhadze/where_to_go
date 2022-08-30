@@ -13,7 +13,7 @@ pip install -r requirements.txt
 ```dotenv
 DJANGO_SECURITY_KEY=Ваш ключ безопасности Django
 STATIC_ROOT=путь/к/папке
-ALLOWED_HOSTS=['Разрешенные', 'хосты']
+ALLOWED_HOSTS=['Разрешенный хост 1', 'Разрешенный хост 2']
 DEBUG_MODE=False
 CSRF_COOKIE_SECURE=True или False
 SESSION_COOKIE_SECURE=True или False
