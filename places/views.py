@@ -4,8 +4,7 @@ from django.http import JsonResponse
 from django.urls import reverse
 
 
-def make_places_geo_data():
-    places = Place.objects.all()
+def make_places_geo_data(places):
     places_geo_data = {
         "type": "FeatureCollection",
         "features": []
@@ -45,7 +44,8 @@ def get_place_by_id(request, place_id):
 
 
 def index(request):
+    all_places = Place.objects.all()
     context = {
-        "geojson": make_places_geojson()
+        "geojson": make_places_geo_data(all_places)
     }
     return render(request, 'index.html', context)
