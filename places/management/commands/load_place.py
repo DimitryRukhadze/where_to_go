@@ -42,32 +42,29 @@ class Command(BaseCommand):
         response.raise_for_status()
 
         place_data = response.json()
+        new_place, is_created = Place.objects.get_or_create(
+            title=place_data['title'],
+            defaults={
+                'description_short': place_data.get('description_short'),
+                'description_long': place_data.get('description_long'),
+                'longitude': float(place_data['coordinates']['lng']),
+                'latitude': float(place_data['coordinates']['lat'])
+            }
+        )
+
+        temp_img_folder = 'temp_img_folder'
+        os.makedirs(temp_img_folder, exist_ok=True)
+
         try:
-            new_place, is_created = Place.objects.get_or_create(
-                title=place_data['title'],
-                defaults = {
-                    'description_short': place_data['description_short'],
-                    'description_long': place_data['description_long'],
-                    'longitude': float(place_data['coordinates']['lng']),
-                    'latitude': float(place_data['coordinates']['lat'])
-                }
+            self.save_place_imgs(
+                place_data['imgs'],
+                temp_img_folder,
+                new_place
             )
+        except requests.exceptions.HTTPError as error:
+            print(error)
+        finally:
+            shutil.rmtree(temp_img_folder)
 
-            temp_img_folder = 'temp_img_folder'
-            os.makedirs(temp_img_folder, exist_ok=True)
-
-            try:
-                self.save_place_imgs(
-                    place_data['imgs'],
-                    temp_img_folder,
-                    new_place
-                )
-            except requests.exceptions.HTTPError as error:
-                print(error)
-            finally:
-                shutil.rmtree(temp_img_folder)
-
-            if not is_created:
-                print(f'{new_place} has been updated')
-        except IntegrityError:
-            print('This place already exists in the database')
+        if not is_created:
+            print(f'{new_place} has been updated')
