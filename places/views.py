@@ -40,7 +40,11 @@ def get_place_by_id(request, place_id):
         }
     }
 
-    return JsonResponse(place_specs)
+    json_dumps_params = {
+        'ensure_ascii': False
+    }
+
+    return JsonResponse(place_specs, json_dumps_params=json_dumps_params)
 
 
 def index(request):
