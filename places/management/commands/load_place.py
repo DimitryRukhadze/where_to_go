@@ -43,12 +43,14 @@ class Command(BaseCommand):
 
         place_data = response.json()
         try:
-            new_place, _ = Place.objects.get_or_create(
+            new_place, is_created = Place.objects.get_or_create(
                 title=place_data['title'],
-                description_short=place_data['description_short'],
-                description_long=place_data['description_long'],
-                longitude=float(place_data['coordinates']['lng']),
-                latitude=float(place_data['coordinates']['lat'])
+                defaults = {
+                    'description_short': place_data['description_short'],
+                    'description_long': place_data['description_long'],
+                    'longitude': float(place_data['coordinates']['lng']),
+                    'latitude': float(place_data['coordinates']['lat'])
+                }
             )
 
             temp_img_folder = 'temp_img_folder'
@@ -64,5 +66,8 @@ class Command(BaseCommand):
                 print(error)
             finally:
                 shutil.rmtree(temp_img_folder)
+
+            if not is_created:
+                print(f'{new_place} has been updated')
         except IntegrityError:
             print('This place already exists in the database')
