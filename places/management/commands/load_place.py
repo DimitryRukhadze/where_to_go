@@ -67,6 +67,5 @@ class Command(BaseCommand):
                 print(error)
             finally:
                 shutil.rmtree(temp_img_folder)
-
         except IntegrityError:
-            suppress()
+            print('This place already exists in the database')
