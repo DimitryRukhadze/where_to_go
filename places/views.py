@@ -4,9 +4,9 @@ from django.http import JsonResponse
 from django.urls import reverse
 
 
-def make_places_geojson():
+def make_places_geo_data():
     places = Place.objects.all()
-    places_geojson = {
+    places_geo_data = {
         "type": "FeatureCollection",
         "features": []
     }
@@ -23,9 +23,9 @@ def make_places_geojson():
                 "detailsUrl": reverse('place_by_id', args=[place.id])
             }
         }
-        places_geojson['features'].append(data_for_geojson)
+        places_geo_data['features'].append(data_for_geojson)
 
-    return places_geojson
+    return places_geo_data
 
 
 def get_place_by_id(request, place_id):
