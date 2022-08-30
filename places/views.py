@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.shortcuts import render, get_object_or_404
 from places.models import Place
 from django.http import JsonResponse
@@ -7,22 +9,22 @@ from django.urls import reverse
 def make_places_geo_data(places):
     places_geo_data = {
         "type": "FeatureCollection",
-        "features": []
-    }
-    for place in places:
-        data_for_geojson = {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [place.longitude, place.latitude]
-            },
-            "properties": {
-                "title": place.title,
-                "placeId": place.id,
-                "detailsUrl": reverse('place_by_id', args=[place.id])
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [place.longitude, place.latitude]
+                },
+                "properties": {
+                    "title": place.title,
+                    "placeId": place.id,
+                    "detailsUrl": reverse('place_by_id', args=[place.id])
+                }
             }
-        }
-        places_geo_data['features'].append(data_for_geojson)
+            for place in places
+        ]
+    }
 
     return places_geo_data
 
