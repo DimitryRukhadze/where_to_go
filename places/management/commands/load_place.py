@@ -6,7 +6,7 @@ from urllib.parse import urlparse, unquote
 
 import requests
 from django.core.management.base import BaseCommand
-from django.db.utils import IntegrityError
+from django.core.files.base import ContentFile
 from places.models import Place
 
 
@@ -19,20 +19,20 @@ class Command(BaseCommand):
             help='Путь к папке с данными json'
         )
 
-    def save_place_imgs(self, imgs_urls, temp_img_folder, place_to_attach):
+    def save_place_imgs(self, imgs_urls, place_to_attach):
         for url in imgs_urls:
             response = requests.get(url)
             response.raise_for_status()
+
             filepath = urlparse(unquote(url)).path
             _, filename = os.path.split(filepath)
-            save_path = Path(temp_img_folder, filename)
+            file_content = response.content
 
-            with open(save_path, 'wb') as img_file:
-                img_file.write(response.content)
+            img_file = ContentFile(file_content)
 
             new_image = place_to_attach.images.create(place=place_to_attach)
-            with open(save_path, 'rb') as img_file:
-                new_image.img_file.save(filename, img_file, save=True)
+            new_image.img_file.save(filename, img_file, save=True)
+
 
     def handle(self, *args, **options):
 
