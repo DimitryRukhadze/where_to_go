@@ -13,17 +13,9 @@ class ImagesInLine(SortableTabularInline):
     ordering = ['queue_position']
 
     def img_preview(self, obj):
-        height = obj.img_file.height
-        width = obj.img_file.width
-        while height > 200:
-            height /= 2
-            width /= 2
-
         img_html = format_html(
-            '<img src="{}" width="{}" height={} />',
+            '<img src="{}" style="max-height: 200px" />',
             obj.img_file.url,
-            width,
-            height
         )
 
         return mark_safe(img_html)
