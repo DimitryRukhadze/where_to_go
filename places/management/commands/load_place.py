@@ -28,8 +28,8 @@ class Command(BaseCommand):
 
             img_file = ContentFile(file_content)
 
-            new_image = place_to_attach.images.create(place=place_to_attach)
-            new_image.img_file.save(filename, img_file, save=True)
+            place_image = place_to_attach.images.create(place=place_to_attach)
+            place_image.img_file.save(filename, img_file, save=True)
 
     def handle(self, *args, **options):
 
@@ -39,7 +39,7 @@ class Command(BaseCommand):
         response.raise_for_status()
 
         place_data = response.json()
-        new_place, is_created = Place.objects.get_or_create(
+        place_obj, is_created = Place.objects.get_or_create(
             title=place_data['title'],
             defaults={
                 'description_short': place_data.get('description_short', ''),
@@ -52,10 +52,10 @@ class Command(BaseCommand):
         try:
             self.save_place_imgs(
                 place_data['imgs'],
-                new_place
+                place_obj
             )
         except requests.exceptions.HTTPError as error:
             print(error)
 
         if not is_created:
-            print(f'{new_place} has been updated')
+            print(f'{place_obj} has been updated')
