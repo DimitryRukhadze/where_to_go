@@ -1,7 +1,5 @@
 import os
-import shutil
 
-from pathlib import Path
 from urllib.parse import urlparse, unquote
 
 import requests
@@ -51,19 +49,13 @@ class Command(BaseCommand):
             }
         )
 
-        temp_img_folder = 'temp_img_folder'
-        os.makedirs(temp_img_folder, exist_ok=True)
-
         try:
             self.save_place_imgs(
                 place_data['imgs'],
-                temp_img_folder,
                 new_place
             )
         except requests.exceptions.HTTPError as error:
             print(error)
-        finally:
-            shutil.rmtree(temp_img_folder)
 
         if not is_created:
             print(f'{new_place} has been updated')
