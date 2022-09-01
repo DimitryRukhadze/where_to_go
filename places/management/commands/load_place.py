@@ -33,7 +33,6 @@ class Command(BaseCommand):
             new_image = place_to_attach.images.create(place=place_to_attach)
             new_image.img_file.save(filename, img_file, save=True)
 
-
     def handle(self, *args, **options):
 
         json_files_url = options['json_url']
