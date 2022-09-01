@@ -5,7 +5,7 @@ from urllib.parse import urlparse, unquote
 import requests
 from django.core.management.base import BaseCommand
 from django.core.files.base import ContentFile
-from places.models import Place
+from places.models import Place, Image
 
 
 class Command(BaseCommand):
@@ -24,12 +24,10 @@ class Command(BaseCommand):
 
             filepath = urlparse(unquote(url)).path
             _, filename = os.path.split(filepath)
-            file_content = response.content
+            img_file_content = response.content
 
-            img_file = ContentFile(file_content)
-
-            place_image = place_to_attach.images.create(place=place_to_attach)
-            place_image.img_file.save(filename, img_file, save=True)
+            img_file = ContentFile(img_file_content, name=filename)
+            place_to_attach.images.create(place=place_to_attach, img_file=img_file)
 
     def handle(self, *args, **options):
 
