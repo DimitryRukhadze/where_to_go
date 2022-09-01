@@ -39,7 +39,7 @@ class Command(BaseCommand):
         response.raise_for_status()
 
         place_data = response.json()
-        place_obj, is_created = Place.objects.get_or_create(
+        place_obj, created = Place.objects.get_or_create(
             title=place_data['title'],
             defaults={
                 'description_short': place_data.get('description_short', ''),
@@ -57,5 +57,5 @@ class Command(BaseCommand):
         except requests.exceptions.HTTPError as error:
             print(error)
 
-        if not is_created:
+        if not created:
             print(f'{place_obj} has been updated')
