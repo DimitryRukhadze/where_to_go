@@ -5,7 +5,7 @@ from urllib.parse import urlparse, unquote
 import requests
 from django.core.management.base import BaseCommand
 from django.core.files.base import ContentFile
-from places.models import Place, Image
+from places.models import Place
 
 
 class Command(BaseCommand):
